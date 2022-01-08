@@ -4,6 +4,7 @@ import com.THC.THCSpringBootAPI.controller.LocationController;
 import com.THC.THCSpringBootAPI.model.THCStore;
 import com.THC.THCSpringBootAPI.repo.THCStoreRepository;
 import com.THC.THCSpringBootAPI.service.StoreService;
+import com.mongodb.MongoException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,30 @@ public class StoreServiceImplementation implements StoreService {
 
     @Override
     public List<THCStore> retrieveStoreList() {
-        return thcStoreRepository.findAll();
+        try {
+            return thcStoreRepository.findAll();
+        } catch (MongoException e) {
+            throw e;
+        }
     }
 
     @Override
     public THCStore addNewStore(THCStore thcStore) {
-        return thcStoreRepository.save(thcStore);
+        try {
+            return thcStoreRepository.save(thcStore);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
-    public boolean removeStore(String id) {
-        return false;
+    public boolean removeStore(String id) throws Exception {
+        if (thcStoreRepository.findById(id) != null) {
+            thcStoreRepository.deleteById(id);
+            return true;
+        } else {
+            throw new Exception("Not Found");
+        }
     }
 
     @Override

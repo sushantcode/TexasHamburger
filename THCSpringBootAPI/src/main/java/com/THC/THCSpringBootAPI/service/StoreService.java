@@ -9,7 +9,7 @@ public interface StoreService {
     // services for high level store chain operations
     List<THCStore> retrieveStoreList();
     THCStore addNewStore(THCStore thcStore);
-    boolean removeStore(String id);
+    boolean removeStore(String id) throws Exception;
 
     // services for updating particular store information
     THCStore getStoreById(String id);
