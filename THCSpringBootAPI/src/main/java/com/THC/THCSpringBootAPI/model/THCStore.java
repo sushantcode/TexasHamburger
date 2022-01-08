@@ -2,22 +2,20 @@ package com.THC.THCSpringBootAPI.model;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
 @Data
-public class Hour {
+@Document(collection = "stores")
+public class THCStore {
     @Id
     private String id;
-    private String mon;
-    private String tue;
-    private String wed;
-    private String thu;
-    private String fri;
-    private String sat;
-    private String sun;
+    private Address address;
+    private Hour hour;
+    private Menu menu;
 
-    public Hour() {
+    public THCStore() {
         this.id = UUID.randomUUID().toString();
     }
 }

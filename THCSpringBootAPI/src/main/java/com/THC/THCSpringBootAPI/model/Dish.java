@@ -6,18 +6,13 @@ import org.springframework.data.annotation.Id;
 import java.util.UUID;
 
 @Data
-public class Hour {
+public class Dish {
     @Id
     private String id;
-    private String mon;
-    private String tue;
-    private String wed;
-    private String thu;
-    private String fri;
-    private String sat;
-    private String sun;
+    private String name;
+    private String[] ingredients;
 
-    public Hour() {
+    public Dish() {
         this.id = UUID.randomUUID().toString();
     }
 }

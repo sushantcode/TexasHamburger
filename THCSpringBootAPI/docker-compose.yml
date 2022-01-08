@@ -3,18 +3,22 @@ services:
   mongodb-container:
     container_name: mongodb-container
     image: mongo:latest
+    volumes:
+      - ./database:/mongo/data
     ports:
-      - 27017:27017
+      - "27017:27017"
   mysqldb-container:
     container_name: mysqldb-container
     image: mysql:latest
+    volumes:
+      - ./database:/mysql/data
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: mysqldb
         MYSQL_USER: user
         MYSQL_PASSWORD: Thcsql1234
     ports:
-      - 3306:3306
+      - "3306:3306"
   thc-spring-boot-container:
     container_name: thc-spring-boot-container
     build:
@@ -22,6 +26,6 @@ services:
       dockerfile: Dockerfile
     image: sushantcode/thc-spring-boot-api:latest
     ports:
-      - 8080:8080
+      - "8080:8080"
     links:
       - mongodb-container
