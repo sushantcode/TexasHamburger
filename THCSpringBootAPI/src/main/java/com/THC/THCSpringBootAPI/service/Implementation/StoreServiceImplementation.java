@@ -1,6 +1,9 @@
 package com.THC.THCSpringBootAPI.service.Implementation;
 
 import com.THC.THCSpringBootAPI.controller.LocationController;
+import com.THC.THCSpringBootAPI.model.Address;
+import com.THC.THCSpringBootAPI.model.Dish;
+import com.THC.THCSpringBootAPI.model.Hour;
 import com.THC.THCSpringBootAPI.model.THCStore;
 import com.THC.THCSpringBootAPI.repo.THCStoreRepository;
 import com.THC.THCSpringBootAPI.service.StoreService;
@@ -31,45 +34,73 @@ public class StoreServiceImplementation implements StoreService {
 
     @Override
     public THCStore addNewStore(THCStore thcStore) {
-        try {
-            return thcStoreRepository.save(thcStore);
-        } catch (Exception e) {
-            throw e;
-        }
+        return thcStoreRepository.save(thcStore);
     }
 
     @Override
-    public boolean removeStore(String id) throws Exception {
-        if (thcStoreRepository.findById(id) != null) {
+    public boolean removeStore(String id) {
+        if (thcStoreRepository.existsById(id)) {
             thcStoreRepository.deleteById(id);
             return true;
-        } else {
-            throw new Exception("Not Found");
         }
+        return false;
     }
 
     @Override
     public THCStore getStoreById(String id) {
+        if (thcStoreRepository.existsById(id)) {
+            return thcStoreRepository.findById(id).get();
+        }
         return null;
     }
 
     @Override
-    public boolean updateStoreAddress(String id) {
+    public boolean updateStoreAddress(String id, Address address) {
+        if (thcStoreRepository.existsById(id)) {
+            THCStore thcStore = thcStoreRepository.findById(id).get();
+            thcStore.setAddress(address);
+            thcStoreRepository.save(thcStore);
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean updateStoreHours(String id) {
+    public boolean updateStoreHours(String id, Hour hour) {
+        if (thcStoreRepository.existsById(id)) {
+            THCStore thcStore = thcStoreRepository.findById(id).get();
+            thcStore.setHour(hour);
+            thcStoreRepository.save(thcStore);
+            return true;
+        }
         return false;
     }
 
     @Override
-    public boolean addDishToStoreMenu(String id) {
+    public boolean addDishToStoreMenu(String id, Dish dish) {
+        if (thcStoreRepository.existsById(id)) {
+            THCStore thcStore = thcStoreRepository.findById(id).get();
+            thcStore.getMenu().getDishes().add(dish);
+            thcStoreRepository.save(thcStore);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean removeDishToStoreMenu(String storeId, String dishId) {
+        if (thcStoreRepository.existsById(storeId)) {
+            THCStore thcStore = thcStoreRepository.findById(storeId).get();
+            Dish dish = thcStore.getMenu().getDishes()
+                        .stream()
+                        .filter(dis -> dis.getId().equals(dishId)).findFirst().orElse(null);
+            if (dish == null) {
+                return false;
+            }
+            thcStore.getMenu().getDishes().remove(dish);
+            thcStoreRepository.save(thcStore);
+            return true;
+        }
         return false;
     }
 }
