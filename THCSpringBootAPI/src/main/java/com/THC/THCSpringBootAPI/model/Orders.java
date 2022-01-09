@@ -2,23 +2,21 @@ package com.THC.THCSpringBootAPI.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
-public class Reservation {
+public  class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String storeId;
     private String customerName;
     private String customerContact;
-    private String tableNumber;
-    private Date reservationTime;
+
+    @ElementCollection
+    private List<String> items;
     private Timestamp time;
 }

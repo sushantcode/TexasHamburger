@@ -2,6 +2,8 @@ package com.THC.THCSpringBootAPI.repo;
 
 import com.THC.THCSpringBootAPI.model.THCStore;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-public interface THCStoreRepository extends MongoRepository<THCStore, String> {
+@Repository
+public interface THCStoreMongoRepository extends MongoRepository<THCStore, String> {
 }

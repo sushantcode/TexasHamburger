@@ -86,9 +86,15 @@ public class THCStoreController {
         logger.info("API Request made to add new dish to a menu");
         boolean isSuccess = storeService.addDishToStoreMenu(id, dish);
         if (!isSuccess) {
-            return new ResponseEntity<>("Store with id: " + id + " does not exist.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(
+                    "Store with id: " + id + " does not exist.",
+                    HttpStatus.NOT_FOUND
+            );
         }
-        return new ResponseEntity<>("Store with id: " + id + " has new dish in its menu now", HttpStatus.OK);
+        return new ResponseEntity<>(
+                "Store with id: " + id + " has new dish with id: " + dish.getId() + " in its menu now",
+                HttpStatus.OK
+        );
     }
 
     @DeleteMapping("/updatemenu")
