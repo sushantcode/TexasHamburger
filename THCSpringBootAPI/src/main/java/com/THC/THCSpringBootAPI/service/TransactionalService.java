@@ -9,7 +9,7 @@ public interface TransactionalService {
 
     // services for reservation operation
     List<Reservation> getReservations();
-    Reservation getReservationByStore(String storeId);
+    List<Reservation> getReservationByStore(String storeId);
     Reservation createNewReservation(Reservation reservation);
     Reservation getReservationById(String reservationId);
     boolean removeReservation(String reservationId);

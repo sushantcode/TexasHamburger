@@ -7,8 +7,8 @@ services:
       - ./database:/mongo/data
     ports:
       - "27017:27017"
-  mysqldb-container:
-    container_name: mysqldb-container
+  mysqldbContainer:
+    container_name: mysqldbContainer
     image: mysql:latest
     volumes:
       - ./database:/mysql/data
@@ -27,6 +27,6 @@ services:
     image: sushantcode/thc-spring-boot-api:latest
     ports:
       - "8080:8080"
-    links:
+    depends_on:
       - mongodb-container
-      - mysqldb-container
+      - mysqldbContainer

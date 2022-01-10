@@ -24,13 +24,20 @@ public class TransactionalServiceImplementation implements TransactionalService 
 
     @Override
     public List<Reservation> getReservations() {
-
-        return null;
+        try {
+            return (List<Reservation>) thcStoreMysqlReservationRepository.findAll();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
-    public Reservation getReservationByStore(String storeId) {
-        return null;
+    public List<Reservation> getReservationByStore(String storeId) {
+        try {
+            return (List<Reservation>) thcStoreMysqlReservationRepository.findAll();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
