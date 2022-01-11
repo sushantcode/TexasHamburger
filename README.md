@@ -110,7 +110,7 @@ pom.xml
 			<scope>test</scope>
 		</dependency>
     
-``
+```
 
 ### Kafka Setting (Make sure to do this before running the main application)
 Although most of the setting has been handled in the code or docker compose files, there are few setups that need to be done before being able to use Kafka data streaming. The steps are as follows:
