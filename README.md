@@ -148,8 +148,8 @@ docker exec -it broker bash
 ```
 - This will get you the kafka container's bash in interactive mode. Then hit the following series of commands:
 ```
-kafka-topics --bootstrap-server broker:9092 --list
-kafka-console-consumer --bootstrap-server broker:9092 --topic orders --from-beginning
+kafka-topics --bootstrap-server broker:29092 --list
+kafka-console-consumer --bootstrap-server broker:29092 --topic orders --from-beginning
 ```
 - Above first command list the topic created by our application when it is launched and second start listening for data form producer client.
 - Now you're listening for the messages in kafka topic named "orders" where our spring boot application will push daily orders data through path "/api/order/all".
@@ -158,5 +158,5 @@ kafka-console-consumer --bootstrap-server broker:9092 --topic orders --from-begi
 
 ## Authors
 
-* **Gupta, Sushant** - *Core Team Member* - [Profile](https://github.com/sushantcode)
+* **Gupta, Sushant** - [Profile](https://github.com/sushantcode)
 
