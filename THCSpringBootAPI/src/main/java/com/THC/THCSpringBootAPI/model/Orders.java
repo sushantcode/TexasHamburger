@@ -1,22 +1,24 @@
 package com.THC.THCSpringBootAPI.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-@Entity
 public  class Orders {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
     private String storeId;
     private String customerName;
     private String customerContact;
+    private List<Dish> items;
+    private Date orderedAt;
 
-    @ElementCollection
-    private List<String> items;
-    private Timestamp time;
+    public Orders() {
+        this.id = UUID.randomUUID().toString();
+        this.orderedAt = new Date();
+    }
 }
