@@ -112,20 +112,6 @@ pom.xml
     
 ```
 
-### Kafka Setting (Make sure to do this before running the main application)
-Although most of the setting has been handled in the code or docker compose files, there are few setups that need to be done before being able to use Kafka data streaming. The steps are as follows:
-- Open terminal and navigate to the project directory.
-- Run the following command:
-```
-docker exec -it broker bash
-```
-- This will get you the kafka container's bash in interactive mode. Then hit the following series of commands:
-```
-kafka-topics --bootstrap-server broker:9092 --create --topic orders
-kafka-console-consumer --bootstrap-server broker:9092 --topic orders --from-beginning
-```
-- Now you're listening for the messages in kafka topic named "orders" where our spring boot application will push daily orders data through path "/api/order/all".
-`
 
 ### Installing
 
@@ -150,6 +136,24 @@ docker-compose up --build
 http://localhost:8080/swagger-ui.html
 ```
 - This page will show all api endpoints and data models with sufficient description
+
+
+
+### Kafka Setting (To make sure everything is right and running fine)
+Although most of the setting has been handled in the code or docker compose files, there are few setups that need to be done before being able to use Kafka data streaming. The steps are as follows:
+- Open terminal and navigate to the project directory.
+- Run the following command:
+```
+docker exec -it broker bash
+```
+- This will get you the kafka container's bash in interactive mode. Then hit the following series of commands:
+```
+kafka-topics --bootstrap-server broker:9092 --list
+kafka-console-consumer --bootstrap-server broker:9092 --topic orders --from-beginning
+```
+- Above first command list the topic created by our application when it is launched and second start listening for data form producer client.
+- Now you're listening for the messages in kafka topic named "orders" where our spring boot application will push daily orders data through path "/api/order/all".
+`
 
 
 ## Authors
