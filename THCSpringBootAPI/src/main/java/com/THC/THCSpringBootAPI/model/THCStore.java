@@ -1,5 +1,7 @@
 package com.THC.THCSpringBootAPI.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @Document(collection = "stores")
+@ApiModel
 public class THCStore {
     @Id
     private String id;

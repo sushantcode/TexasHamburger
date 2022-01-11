@@ -1,5 +1,6 @@
 package com.THC.THCSpringBootAPI.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@ApiModel
 public class ApiExecutionInfo {
     @Id
     private String id;

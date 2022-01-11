@@ -4,6 +4,7 @@ import com.THC.THCSpringBootAPI.model.Orders;
 import com.THC.THCSpringBootAPI.model.Reservation;
 import com.THC.THCSpringBootAPI.service.StoreService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,8 @@ public class OrdersController {
     @ApiOperation(value = "send daily orders list to Kafka stream",
             notes = "provide store id to send its daily list of orders to kafka which then be " +
                     "consumed by the consumer.")
-    public ResponseEntity<?> pushDayOrdersToKafka(@RequestParam String id) {
+    public ResponseEntity<?> pushDayOrdersToKafka(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam String id) {
         logger.info("API Request made to push all orders for a day");
         List<Orders> ordersList = storeService.getAllOrders(id);
         if (ordersList == null) {
@@ -51,7 +53,8 @@ public class OrdersController {
     @PostMapping("/create")
     @ApiOperation(value = "create new order for a location",
             notes = "provide store id and Orders object to be added to the database.")
-    public ResponseEntity<String> createNewOrder(@RequestParam String id, @RequestBody Orders orders) {
+    public ResponseEntity<String> createNewOrder(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam String id, @RequestBody Orders orders) {
         logger.info("API Request made to add new order");
         boolean isSuccess = storeService.createNewOrder(id, orders);
         if (!isSuccess) {

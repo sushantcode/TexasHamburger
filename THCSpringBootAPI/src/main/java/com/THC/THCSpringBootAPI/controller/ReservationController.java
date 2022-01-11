@@ -3,6 +3,7 @@ package com.THC.THCSpringBootAPI.controller;
 import com.THC.THCSpringBootAPI.model.Reservation;
 import com.THC.THCSpringBootAPI.service.StoreService;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class ReservationController {
     @GetMapping("/all")
     @ApiOperation(value = "get all reservations",
             notes = "provide store id to get the list of all reservation at that store.")
-    public ResponseEntity<?> getAllReservations(@RequestParam String id) {
+    public ResponseEntity<?> getAllReservations(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam String id) {
         logger.info("API Request made to get all reservation for a store");
         List<Reservation> reservationList = storeService.getAllReservations(id);
         if (reservationList == null) {
@@ -43,7 +45,8 @@ public class ReservationController {
     @ApiOperation(value = "create a new reservation",
             notes = "provide store id and reservation object to add reservation to database to " +
                     "that store")
-    public ResponseEntity<String> createNewReservation(@RequestParam String id, @RequestBody Reservation reservation) {
+    public ResponseEntity<String> createNewReservation(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam String id, @RequestBody Reservation reservation) {
         logger.info("API Request made to add new reservation");
         boolean isSuccess = storeService.createNewReservation(id, reservation);
         if (!isSuccess) {
@@ -59,7 +62,9 @@ public class ReservationController {
     @ApiOperation(value = "get a reservation by id",
             notes = "provide store id and the reservation id to retrieve the detail of " +
                     "the particular reservation")
-    public ResponseEntity<?> getReservationById(@RequestParam String id, @RequestParam String reservationId) {
+    public ResponseEntity<?> getReservationById(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam String id, @ApiParam(value = "Reservation Id",
+            required = true, defaultValue = "") @RequestParam String reservationId) {
         logger.info("API Request made to get reservation for a reservation by id");
         Reservation reservation = storeService.getReservationById(id, reservationId);
         if (reservation == null) {
@@ -75,7 +80,9 @@ public class ReservationController {
     @ApiOperation(value = "remove reservation from a store",
             notes = "provide store id and the reservation id to erase the reservation " +
                     "from the location.")
-    public ResponseEntity<String> deleteReservation(@RequestParam  String id, @RequestParam String reservationId) {
+    public ResponseEntity<String> deleteReservation(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam  String id, @ApiParam(value = "Reservation Id",
+            required = true, defaultValue = "") @RequestParam String reservationId) {
         logger.info("API Request made to remove reservation using id");
         boolean isSuccess = storeService.removeReservation(id, reservationId);
         if (!isSuccess) {
@@ -91,7 +98,9 @@ public class ReservationController {
     @ApiOperation(value = "modify a reservation at the store",
             notes = "provide store id and the reservation id along with the new Reservation object" +
                     " to update it's detail.")
-    public ResponseEntity<?> modifyResrvation(@RequestParam String id, @RequestParam String reservationId, @RequestBody Reservation reservation) {
+    public ResponseEntity<?> modifyResrvation(@ApiParam(value = "Store Id",
+            required = true, defaultValue = "") @RequestParam String id, @ApiParam(value = "Reservation Id",
+            required = true, defaultValue = "") @RequestParam String reservationId, @RequestBody Reservation reservation) {
         logger.info("API Request made to modify a reservation detail");
         boolean isSuccess = storeService.modifyReservation(id, reservationId, reservation);
         if (!isSuccess) {
