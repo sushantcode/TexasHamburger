@@ -42,19 +42,27 @@ services:
         MYSQL_PASSWORD: thcsql1234
     ports:
       - "3306:3306"
-#  thc-spring-boot-container:
-#    container_name: thc-spring-boot-container
-#    build:
-#      context: "./"
-#      dockerfile: "Dockerfile"
-#    image: sushantcode/thc-spring-boot-api:latest
-#    environment:
-#      # mongodb setup
-#      - spring_data_mongodb_host=mongodb-container
-#      # MySql setup
-#      - spring_datasource_url=jdbc:mysql://mysqldbContainer:3306/thcmysqldb?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
-#    ports:
-#      - "8080:8080"
-#    depends_on:
-#      - mongodb-container
-#      - mysqldbContainer
+  thc-spring-boot-container:
+    container_name: thc-spring-boot-container
+    build:
+      context: "./"
+      dockerfile: "Dockerfile"
+    image: sushantcode/thc-spring-boot-api:latest
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      # kafka
+      - spring_kafka_bootstrap-servers=broker:29092
+      # mongodb setup
+      - spring_data_mongodb_host=mongodb-container
+      # MySql setup
+      - spring_datasource_url=jdbc:mysql://mysqldbContainer:3306/thcmysqldb?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    ports:
+      - "8080:8080"
+    links:
+      - broker
+      - mongodb-container
+      - mysqldbContainer
+    depends_on:
+      - mongodb-container
+      - mysqldbContainer
+      - broker

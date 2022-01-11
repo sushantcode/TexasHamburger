@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ThcApiService {
 
-    boolean pushApiExecutionInfo(ApiExecutionInfo apiExecutionInfo);
+    void pushApiExecutionInfo(ApiExecutionInfo apiExecutionInfo);
     List<ApiExecutionInfo> apiExecutionInfoByName(String queryName);
     List<ApiExecutionInfo> apiExecutionInfoByDate(String queryDate);
 }

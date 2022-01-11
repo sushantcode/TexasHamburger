@@ -40,14 +40,18 @@ public class OrdersController {
             required = true, defaultValue = "") @RequestParam String id) {
         logger.info("API Request made to push all orders for a day");
         List<Orders> ordersList = storeService.getAllOrders(id);
-        if (ordersList == null) {
+        if (ordersList == null || ordersList.isEmpty()) {
             return new ResponseEntity<>(
                     "Store with id: " + id + " does not exist or there is not orders in database.",
                     HttpStatus.NOT_FOUND
             );
         }
-        kafkaTemplate.send(KAFKA_TOPIC, ordersList);
-        return new ResponseEntity<>("Order collection pushed to kafka", HttpStatus.OK);
+        try {
+            kafkaTemplate.send(KAFKA_TOPIC, ordersList);
+            return new ResponseEntity<>("Order collection pushed to kafka", HttpStatus.OK);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @PostMapping("/create")

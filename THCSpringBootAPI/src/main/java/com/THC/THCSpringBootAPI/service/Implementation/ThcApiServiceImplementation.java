@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 public class ThcApiServiceImplementation implements ThcApiService {
@@ -19,13 +20,15 @@ public class ThcApiServiceImplementation implements ThcApiService {
     private ApiExecutionTimeMysqlRepository apiExecutionTimeMysqlRepository;
 
     @Override
-    public boolean pushApiExecutionInfo(ApiExecutionInfo apiExecutionInfo) {
-        try {
-            apiExecutionTimeMysqlRepository.save(apiExecutionInfo);
-            return true;
-        } catch (Exception e) {
-            logger.error("Failed to push api execution Time to database because " + e.getMessage());
-            return false;
+    public void pushApiExecutionInfo(ApiExecutionInfo apiExecutionInfo) {
+        Pattern pattern = Pattern.compile("/api/.*");
+        boolean isMatch = pattern.matcher(apiExecutionInfo.getName()).matches();
+        if (isMatch) {
+            try {
+                apiExecutionTimeMysqlRepository.save(apiExecutionInfo);
+            } catch (Exception e) {
+                logger.error("Failed to push api execution Time to database because " + e.getMessage());
+            }
         }
     }
 
