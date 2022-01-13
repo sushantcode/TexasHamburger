@@ -3,13 +3,7 @@ pipeline {
   stages {
       stage('Build') {
           steps {
-              sh 'cd THCSpringBootAPI'
-              sh 'ls'
-              sh './mvnw clean install'
-              sh 'cd ../THCOrderConsumer'
-              sh './mvnw clean install'
-              sh 'cd ..'
-              sh 'docker-compose up --build'
+              sh 'ls && ./run.sh'
           }
       }
   }
