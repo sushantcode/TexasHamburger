@@ -2,9 +2,9 @@ pipeline {
   agent any
   stages {
       stage('Build') {
-          steps {
-              sh 'ls && ./run.sh'
-          }
+        withEnv(["PATH=$PATH:~/.local/bin"]){
+          sh 'ls && ./run.sh'
+        }
       }
   }
 }
