@@ -45,10 +45,9 @@ services:
   thc-spring-boot-container:
     container_name: thc-spring-boot-container
     build:
-      context: "./"
+      context: "./THCSpringBootAPI/"
       dockerfile: "Dockerfile"
     image: sushantcode/thc-spring-boot-api:latest
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
       # kafka
       - spring_kafka_bootstrap-servers=broker:29092
@@ -66,3 +65,22 @@ services:
       - mongodb-container
       - mysqldbContainer
       - broker
+  thc-spring-boot-consumer:
+    container_name: thc-spring-boot-consumer
+    build:
+      context: "./THCOrderConsumer/"
+      dockerfile: "Dockerfile"
+    image: sushantcode/thc-spring-boot-consumer:latest
+    environment:
+      # kafka
+      - spring_kafka_bootstrap-servers=broker:29092
+      # MySql setup
+      - spring_datasource_url=jdbc:mysql://mysqldbContainer:3306/thcmysqldb?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    ports:
+      - "8081:8081"
+    links:
+      - broker
+      - mysqldbContainer
+      - thc-spring-boot-container
+    depends_on:
+      - thc-spring-boot-container
