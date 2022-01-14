@@ -15,6 +15,7 @@ JDK 11 (used for this project)
 Docker
 Docker-compose
 Kafka and zookeeper (inside docker container)
+Jenkins
 
 Dependencies are below:
 

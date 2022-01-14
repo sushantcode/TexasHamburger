@@ -77,7 +77,7 @@ public class StoreServiceImplementation implements StoreService {
     public boolean addDishToStoreMenu(String storeId, Dish dish) {
         if (thcStoreMongoRepository.existsById(storeId)) {
             THCStore thcStore = thcStoreMongoRepository.findById(storeId).get();
-            thcStore.getMenu().getDishes().add(dish);
+            thcStore.getMenu().add(dish);
             thcStoreMongoRepository.save(thcStore);
             return true;
         }
@@ -88,13 +88,13 @@ public class StoreServiceImplementation implements StoreService {
     public boolean removeDishToStoreMenu(String storeId, String dishId) {
         if (thcStoreMongoRepository.existsById(storeId)) {
             THCStore thcStore = thcStoreMongoRepository.findById(storeId).get();
-            Dish dish = thcStore.getMenu().getDishes()
+            Dish dish = thcStore.getMenu()
                         .stream()
                         .filter(dis -> dis.getId().equals(dishId)).findFirst().orElse(null);
             if (dish == null) {
                 return false;
             }
-            thcStore.getMenu().getDishes().remove(dish);
+            thcStore.getMenu().remove(dish);
             thcStoreMongoRepository.save(thcStore);
             return true;
         }

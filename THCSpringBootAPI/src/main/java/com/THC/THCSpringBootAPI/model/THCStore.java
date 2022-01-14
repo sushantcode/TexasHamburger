@@ -18,7 +18,7 @@ public class THCStore {
     private String id;
     private Address address;
     private Hour hour;
-    private Menu menu;
+    private List<Dish> menu;
     private List<Reservation> reservationList;
     private List<Orders> ordersList;
 
@@ -26,5 +26,6 @@ public class THCStore {
         this.id = UUID.randomUUID().toString();
         this.ordersList = new ArrayList<>();
         this.reservationList = new ArrayList<>();
+        this.menu = new ArrayList<>();
     }
 }
