@@ -10,12 +10,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 Tools used for this project:
 
-- IntelliJ Idea / Other Suitabe Ide
-- JDK 11 (used for this project)
+- IntelliJ Idea
+- JDK 11
 - Docker
 - Docker-compose
 - Kafka and zookeeper (inside docker container)
 - Jenkins-lts
+- Swagger 2
 
 Dependencies are below:
 
